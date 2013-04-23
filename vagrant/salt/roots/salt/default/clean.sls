@@ -1,0 +1,24 @@
+pkg-to-clean:
+  pkg:
+    - removed
+    - names:
+      - git-core
+      - linux-headers-server
+      - linux-image-server
+      - linux-headers-generic
+      - linux-image-generic
+      - linux-server
+      - linux-image-3.2.0-29-virtual
+      - linux-headers-3.2.0-29
+      - linux-image-3.2.0-30-virtual
+      - linux-headers-3.2.0-30
+      - linux-image-3.2.0-31-virtual
+      - linux-headers-3.2.0-31
+      - linux-image-3.2.0-32-virtual
+      - linux-headers-3.2.0-32
+      - linux-image-3.2.0-23-generic
+      - linux-headers-3.2.0-23
+      - linux-image-3.2.0-40-generic
+      - linux-headers-3.2.0-40-generic
+      - memtest86+
+      - ubuntu-standard
