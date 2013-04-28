@@ -1,9 +1,14 @@
 base:
   '*':
+    - aa_dependencies
+    - apache2
     - apt
-    - default
     - customize
+#    - default
+    - munin
+    - nginx
+    - pgbouncer
     - postgres
     - redis
-    - nginx
-    - django
+    - utils
+#    - django

@@ -35,4 +35,6 @@ nosetests.xml
 .pydevproject
 
 # More
+.DS_Store
 .vagrant/
+vagrant/Vagrantfile
