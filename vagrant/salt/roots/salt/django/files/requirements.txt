@@ -11,3 +11,5 @@ recaptcha-client==1.0.6
 redis==2.7.2
 sendgrid==0.1.3
 simplejson==3.1.3
+mock
+unittest2
