@@ -34,7 +34,7 @@ redis-server:
       port: 6379
       maxmemory: 0
       loglevel: notice
-      databases: 1
+      databases: 16
     - require:
       - pkg: redis-server
 
