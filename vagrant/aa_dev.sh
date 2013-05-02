@@ -49,7 +49,7 @@ done
 
 generate_vagrant_file() {
     cd $AA_VAGRANT_PATH
-    echo "Please input your local aa repository path"
+    echo -n "Please input your local aa repository path: "
     read AA_REPO_PATH
     echo "local_aa_repo_file=\"$AA_REPO_PATH\"" > Vagrantfile
     echo "" >> Vagrantfile
@@ -73,7 +73,7 @@ if [ ! -z $UP_OPTION ]; then
         vagrant plugin install vagrant-vbguest
         exit_if_failed "install vagrant-vbguest"
         
-        echo "Please input box file location."
+        echo -n "Please input box file location: "
         read BOX_FILE_PATH
         
         vagrant box add $BOX_NAME $BOX_FILE_PATH
@@ -82,7 +82,7 @@ if [ ! -z $UP_OPTION ]; then
         git clone $CONFIG_GIT_REPO $AA_DEV_PATH
         exit_if_failed "clone config repo from git"
 
-        ln -s $AA_VAGRANT_PATH/aa_dev.sh /usr/local/bin/aa_dev
+        sudo ln -s $AA_VAGRANT_PATH/aa_dev.sh /usr/local/bin/aa_dev
 
         generate_vagrant_file
         cd $AA_VAGRANT_PATH
@@ -92,7 +92,7 @@ if [ ! -z $UP_OPTION ]; then
         vagrant up --no-provision
     fi
 elif [ ! -z $UPDATE_OPTION ]; then
-    echo "Update operation will halt vm first, do you want continue(y/n)?"
+    echo -n "Update operation will halt vm first, do you want continue(y/n)?: "
     read yes_or_no
     if [ $yes_or_no == "n" -o $yes_or_no == "N" ]; then
         exit 1
