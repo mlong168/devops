@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 
 check_program() {
     i=0
@@ -36,29 +36,69 @@ CONFIG_GIT_REPO="https://github.com/zhangcheng/devops"
 AA_DEV_PATH="$HOME/.aa_dev"
 AA_VAGRANT_PATH=$AA_DEV_PATH/vagrant
 
-if [ ! -d "$AA_DEV_PATH" ]; then
-    vagrant plugin install vagrant-salt
-    exit_if_failed "install vagrant-salt"
-    vagrant plugin install vagrant-vbguest
-    exit_if_failed "install vagrant-vbguest"
-    
-    echo "Please input box file location."
-    read BOX_FILE_PATH
-    
-    vagrant box add $BOX_NAME $BOX_FILE_PATH
-    exit_if_failed "add vagrant box"
-    
-    git clone $CONFIG_GIT_REPO $AA_DEV_PATH
-    exit_if_failed "clone config repo from git"
 
+FULL_ARGS=$@
+
+for args in $FULL_ARGS; do
+    if [ $args == 'up' ]; then
+        UP_OPTION=1
+    elif [ $args == 'update' ]; then
+        UPDATE_OPTION=1
+    fi
+done
+
+generate_vagrant_file() {
     cd $AA_VAGRANT_PATH
     echo "Please input your local aa repository path"
     read AA_REPO_PATH
     echo "local_aa_repo_file=\"$AA_REPO_PATH\"" > Vagrantfile
     echo "" >> Vagrantfile
     cat Vagrantfile.tpl >> Vagrantfile
+}
 
+print_usage() {
+    echo "usage: this scripts is actually an wrapper for vagrant, which means you can use all use it the same as vagrant"
+    echo "  update update configuration"
+    echo "  "
+}
+
+print_usage
+
+if [ ! -z $UP_OPTION ]; then
+    if [ ! -d "$AA_DEV_PATH" ]; then
+        vagrant plugin install vagrant-salt
+        exit_if_failed "install vagrant-salt"
+        vagrant plugin install vagrant-vbguest
+        exit_if_failed "install vagrant-vbguest"
+        
+        echo "Please input box file location."
+        read BOX_FILE_PATH
+        
+        vagrant box add $BOX_NAME $BOX_FILE_PATH
+        exit_if_failed "add vagrant box"
+        
+        git clone $CONFIG_GIT_REPO $AA_DEV_PATH
+        exit_if_failed "clone config repo from git"
+
+        generate_vagrant_file
+        vagrant up
+    else
+        cd $AA_VAGRANT_PATH
+        vagrant up --no-provision
+    fi
+elif [ ! -z $UPDATE_OPTION ]; then
+    echo "Update operation will halt vm first, do you want continue(y/n)?"
+    read yes_or_no
+    if [ $yes_or_no == "n" -o $yes_or_no == "N" ]; then
+        exit 1
+    fi    
+    cd $AA_DEV_PATH; git pull
+    generate_vagrant_file
+    cd $AA_VAGRANT_PATH
+    vagrant halt
     vagrant up
 else
-    vagrant up --no-provision
+    cd $AA_VAGRANT_PATH
+    echo "vagrant $FULL_ARGS"
+    vagrant $FULL_ARGS
 fi
