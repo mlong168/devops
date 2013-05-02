@@ -82,6 +82,7 @@ if [ ! -z $UP_OPTION ]; then
         git clone $CONFIG_GIT_REPO $AA_DEV_PATH
         exit_if_failed "clone config repo from git"
 
+        echo "This scripts is trying to create an link under /usr/local/bin. Type your password to allow this."
         sudo ln -s $AA_VAGRANT_PATH/aa_dev.sh /usr/local/bin/aa_dev
 
         generate_vagrant_file
