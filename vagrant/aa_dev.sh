@@ -60,7 +60,7 @@ print_usage() {
     echo "========= Welcome ====================================================="
     echo "this scripts is actually an wrapper for vagrant, "
     echo "which means you can use all commands from vagrant."
-    echo "FYI: if aa_dev updated, use \'aa_dev update\' to update configuration"
+    echo "FYI: if aa_dev updated, use 'aa_dev update' to update configuration"
     echo "======================================================================="
 }
 
