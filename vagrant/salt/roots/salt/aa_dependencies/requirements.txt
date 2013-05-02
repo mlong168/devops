@@ -7,3 +7,5 @@ pytz==2012g
 boto==2.2.2
 sendgrid==0.1.3
 gdata==2.0.8
+mock==1.0.1
+unittest2=0.5.1

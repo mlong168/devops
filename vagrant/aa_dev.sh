@@ -57,9 +57,11 @@ generate_vagrant_file() {
 }
 
 print_usage() {
-    echo "usage: this scripts is actually an wrapper for vagrant, which means you can use all use it the same as vagrant"
-    echo "  update update configuration"
-    echo "  "
+    echo "========= Welcome ====================================================="
+    echo "this scripts is actually an wrapper for vagrant, "
+    echo "which means you can use all commands from vagrant."
+    echo "FYI: if aa_dev updated, use \'aa_dev update\' to update configuration"
+    echo "======================================================================="
 }
 
 print_usage
@@ -80,7 +82,10 @@ if [ ! -z $UP_OPTION ]; then
         git clone $CONFIG_GIT_REPO $AA_DEV_PATH
         exit_if_failed "clone config repo from git"
 
+        ln -s $AA_VAGRANT_PATH/aa_dev.sh /usr/local/bin/aa_dev
+
         generate_vagrant_file
+        cd $AA_VAGRANT_PATH
         vagrant up
     else
         cd $AA_VAGRANT_PATH
